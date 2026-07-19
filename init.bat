@@ -1,0 +1,1 @@
+gcc makeshit.c -o ms.exe
