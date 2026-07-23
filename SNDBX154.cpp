@@ -7,14 +7,12 @@ int main(int argc, char const *argv[])
 
     lzvr x = "Hello World This is ok";
     lzvr y = x;
+    x = "Changed";
     lzvr z(y);
+    y = "y is changed";
     out(x);
     out(y);
     out(z);
-
-    out(x.value.i);
-    out(y.value.i);
-    out(z.value.i);
 
     return 0;
 }

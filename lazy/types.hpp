@@ -56,11 +56,36 @@ public:
     Variant &operator=(const Variant &other)
     {
         this->type = other.type;
-        this->value = other.value;
+        switch (other.type)
+        {
+        case TYPE_INT:
+            this->value = other.value;
+            break;
+        case TYPE_FLOAT:
+            this->value = other.value;
+            break;
+        case TYPE_CHAR:
+            this->value = other.value;
+            break;
+        case TYPE_BOOL:
+            this->value = other.value;
+            break;
+        case TYPE_STR:
+            set_string(other.value.s);
+            break;
+        default:
+            break;
+        }
+        
         return *this;
     };
 
     Variant(const char *s) : type(TYPE_STR)
+    {
+        set_string(s);
+    };
+
+    void set_string(const char *s)
     {
         this->value.s = new char[strlen(s) + 1];
         strcpy(this->value.s, s);
