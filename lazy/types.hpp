@@ -2,7 +2,6 @@
 #define TYPES_HPP
 #include "utils.hpp"
 
-
 #define lzvr Variant
 #define sst ssize_t
 #define st size_t
@@ -13,6 +12,7 @@ enum VariantType
     TYPE_FLOAT,
     TYPE_CHAR,
     TYPE_BOOL,
+    TYPE_STR,
 };
 
 union VariantValue
@@ -21,6 +21,7 @@ union VariantValue
     float f;
     char c;
     bool b;
+    char *s;
 };
 
 class Variant
@@ -45,33 +46,60 @@ public:
     {
         this->value.c = c;
     };
+
+    Variant(const Variant &other)
+    {
+        this->type = other.type;
+        this->value = other.value;
+    };
+
+    Variant &operator=(const Variant &other)
+    {
+        this->type = other.type;
+        this->value = other.value;
+        return *this;
+    };
+
+    Variant(const char *s) : type(TYPE_STR)
+    {
+        this->value.s = new char[strlen(s) + 1];
+        strcpy(this->value.s, s);
+    };
+
     Variant(bool b) : type(TYPE_BOOL)
     {
         this->value.b = b;
     };
 
+    void *id()
+    {
+        return &this->value;
+    };
 
     friend std::ostream &operator<<(std::ostream &os, const Variant &var)
     {
-        if (var.type == TYPE_INT)
+
+        switch (var.type)
         {
+        case TYPE_INT:
             os << var.value.i;
-        }
-        if (var.type == TYPE_FLOAT)
-        {
+            break;
+        case TYPE_FLOAT:
             os << var.value.f;
-        }
-        if (var.type == TYPE_CHAR)
-        {
+            break;
+        case TYPE_CHAR:
             os << var.value.c;
-        }
-        if (var.type == TYPE_BOOL)
-        {
+            break;
+        case TYPE_BOOL:
             os << yesno(var.value.b, TF);
+            break;
+        case TYPE_STR:
+            os << var.value.s;
+            break;
+        default:
+            break;
         }
-
         return os;
-    }
+    };
 };
-
 #endif // TYPES_HPP

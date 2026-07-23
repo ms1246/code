@@ -2,18 +2,19 @@
 
 int main(int argc, char const *argv[])
 {
-    std::vector<lzvr> list{1, 2, 3, 'a', 'v', 3.14159, true, true, false, 54, 67};
-    for (auto &&i : list)
-    {
-        out(i, " ");
-    }
+    // std::vector<lzvr> list{1, 2, 3, 'a', 'v', 3.14159, true, true, false, 54, 67, "Hello World"};
+    // display_vec(list);
 
-    lzvr x = 42;
+    lzvr x = "Hello World This is ok";
+    lzvr y = x;
+    lzvr z(y);
     out(x);
-    lzvr y = {42};
     out(y);
-    lzvr z{42};
     out(z);
-    
+
+    out(x.value.i);
+    out(y.value.i);
+    out(z.value.i);
+
     return 0;
 }

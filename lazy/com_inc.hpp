@@ -5,5 +5,6 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <string.h>
 
 #endif // COM_INC_HPP
